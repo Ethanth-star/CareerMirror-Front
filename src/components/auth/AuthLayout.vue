@@ -17,22 +17,30 @@ const mouse = reactive({
   y: 0.5,
 })
 
-const bodyClasses = ['flex', 'h-screen', 'bg-white', 'text-slate-800', 'font-sans']
+const focusState = computed(() => {
+  const currentPanelPasswordShown =
+    activePanel.value === 'login' ? passwordVisible.login : passwordVisible.signup
 
-const shellClasses = computed(() => {
-  const isLoginPassword = activeInputKey.value === 'loginPassword'
-  const isSignupPassword = activeInputKey.value === 'signupPassword'
-  const isPasswordField = isLoginPassword || isSignupPassword
-  const isPasswordShown =
-    (isLoginPassword && passwordVisible.login) || (isSignupPassword && passwordVisible.signup)
-
-  return {
-    'pwd-shown': isPasswordField && isPasswordShown,
+  if (currentPanelPasswordShown) {
+    return 'pwd-shown'
   }
+
+  if (activeInputKey.value === `${activePanel.value}Password`) {
+    return 'peeking'
+  }
+
+  if (
+    activeInputKey.value === `${activePanel.value}Account` ||
+    activeInputKey.value === `${activePanel.value}Name`
+  ) {
+    return 'peek-up'
+  }
+
+  return 'idle'
 })
 
 const pupilTransform = computed(() => {
-  if (shellClasses.value['pwd-shown']) {
+  if (focusState.value === 'pwd-shown') {
     return 'translate(-6px, -7px)'
   }
 
@@ -75,18 +83,16 @@ function handleSignupSubmit(payload) {
 }
 
 onMounted(() => {
-  document.body.classList.add(...bodyClasses)
   window.addEventListener('mousemove', handleMouseMove)
 })
 
 onBeforeUnmount(() => {
-  document.body.classList.remove(...bodyClasses)
   window.removeEventListener('mousemove', handleMouseMove)
 })
 </script>
 
 <template>
-  <main class="flex h-screen bg-white text-slate-800 font-sans w-full overflow-hidden" :class="shellClasses">
+  <main class="flex h-screen bg-white text-slate-800 font-sans w-full overflow-hidden">
     <section class="hidden md:flex w-1/2 bg-[#e0f2fe] items-center justify-center relative overflow-hidden">
       <div class="absolute top-8 left-8 flex items-center gap-2 z-20 cursor-default select-none">
         <svg
@@ -117,7 +123,7 @@ onBeforeUnmount(() => {
         </div>
       </div>
 
-      <SvgCharacters :pupil-transform="pupilTransform" />
+      <SvgCharacters :focus-state="focusState" :pupil-transform="pupilTransform" />
     </section>
 
     <section class="w-full md:w-1/2 flex flex-col px-6 py-5 overflow-hidden">

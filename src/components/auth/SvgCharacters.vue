@@ -1,5 +1,10 @@
 <script setup>
 defineProps({
+  focusState: {
+    type: String,
+    default: 'idle',
+    validator: (value) => ['idle', 'peek-up', 'peeking', 'pwd-shown'].includes(value),
+  },
   pupilTransform: {
     type: String,
     required: true,
@@ -8,7 +13,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="relative z-10 w-[260px] h-[260px]" aria-hidden="true">
+  <div class="relative z-10 w-[260px] h-[260px]" :class="focusState" aria-hidden="true">
     <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full drop-shadow-2xl">
       <g class="char-purple">
         <path d="M 100 50 L 250 50 L 220 300 L 70 300 Z" fill="#6d28d9" />
@@ -55,12 +60,48 @@ defineProps({
   transition: none;
 }
 
-:global(.pwd-shown) .pupil {
+.char-purple,
+.char-black {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.peek-up .char-purple {
+  transform: translateY(-20px);
+}
+
+.peek-up .char-black {
+  transform: translateY(-30px);
+}
+
+.peeking .char-purple {
+  transform: translateY(20px);
+}
+
+.peeking .char-black {
+  transform: translateY(35px);
+}
+
+.pwd-shown .char-purple,
+.pwd-shown .char-black {
+  transform: translateY(0);
   transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-:global(.pwd-shown) .char-purple,
-:global(.pwd-shown) .char-black {
+:is(.idle, .peek-up, .peeking, .pwd-shown) .char-purple,
+:is(.idle, .peek-up, .peeking, .pwd-shown) .char-black {
+  will-change: transform;
+}
+
+:is(.idle, .peek-up, .peeking) .pupil {
+  transition: none;
+}
+
+.pwd-shown .pupil {
   transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.idle .char-purple,
+.idle .char-black {
+  transform: translateY(0);
 }
 </style>
