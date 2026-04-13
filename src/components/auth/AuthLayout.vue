@@ -88,10 +88,10 @@ onBeforeUnmount(() => {
 <template>
   <main class="flex h-screen bg-white text-slate-800 font-sans w-full overflow-hidden" :class="shellClasses">
     <section class="hidden md:flex w-1/2 bg-[#e0f2fe] items-center justify-center relative overflow-hidden">
-      <div class="absolute top-9 left-9 flex items-center gap-2.5 z-20 cursor-default select-none">
+      <div class="absolute top-8 left-8 flex items-center gap-2 z-20 cursor-default select-none">
         <svg
           viewBox="0 0 40 40"
-          class="w-7 h-7 drop-shadow-md text-slate-800"
+          class="w-6 h-6 drop-shadow-md text-slate-800"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           aria-hidden="true"
@@ -111,7 +111,7 @@ onBeforeUnmount(() => {
         </svg>
 
         <div
-          class="text-[18px] font-bold tracking-[0.1em] text-transparent bg-clip-text bg-gradient-to-br from-slate-800 to-slate-600 drop-shadow-sm"
+          class="text-[16px] font-bold tracking-[0.08em] text-transparent bg-clip-text bg-gradient-to-br from-slate-800 to-slate-600 drop-shadow-sm"
         >
           职镜天枢
         </div>
@@ -120,9 +120,9 @@ onBeforeUnmount(() => {
       <SvgCharacters :pupil-transform="pupilTransform" />
     </section>
 
-    <section class="w-full md:w-1/2 flex flex-col px-7 py-6 overflow-hidden">
+    <section class="w-full md:w-1/2 flex flex-col px-6 py-5 overflow-hidden">
       <div class="flex-1 w-full flex flex-col justify-center items-center">
-        <div class="w-full max-w-[28rem] relative">
+        <div class="w-full max-w-[18.5rem] relative">
           <LoginForm
             v-if="activePanel === 'login'"
             class="fade-enter"
@@ -147,18 +147,18 @@ onBeforeUnmount(() => {
         </div>
       </div>
 
-      <footer class="w-full mt-6 flex justify-center items-center gap-3 text-[11px] select-none opacity-90 pb-2">
+      <footer class="w-full mt-5 flex justify-center items-center gap-2.5 text-[10px] select-none opacity-90 pb-1.5">
         <div class="flex items-center gap-2">
-          <img src="/mingshan-logo.svg" alt="明衫科技 Logo" class="h-4 mix-blend-multiply" />
-          <span class="font-bold text-slate-800 tracking-[0.12em] text-[13px]">明衫科技</span>
+          <img src="/mingshan-logo.svg" alt="明衫科技 Logo" class="h-3.5 mix-blend-multiply" />
+          <span class="font-bold text-slate-800 tracking-[0.08em] text-[11px]">明衫科技</span>
         </div>
 
-        <div class="w-[1px] h-3.5 bg-slate-300 rounded-full"></div>
+        <div class="w-[1px] h-3 bg-slate-300 rounded-full"></div>
 
         <div class="flex items-center gap-2">
           <svg
             viewBox="0 0 40 40"
-            class="w-[18px] h-[18px] text-slate-800"
+            class="w-[14px] h-[14px] text-slate-800"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
@@ -175,7 +175,7 @@ onBeforeUnmount(() => {
             <path d="M20 8L22.5 17.5L32 20L22.5 22.5L20 32L17.5 22.5L8 20L17.5 17.5L20 8Z" fill="currentColor" />
             <circle cx="20" cy="20" r="2.5" fill="currentColor" />
           </svg>
-          <span class="font-bold text-slate-800 tracking-[0.12em] text-[13px]">职镜天枢</span>
+          <span class="font-bold text-slate-800 tracking-[0.08em] text-[11px]">职镜天枢</span>
         </div>
       </footer>
     </section>

@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="relative z-10 w-[300px] h-[300px] -translate-y-1" aria-hidden="true">
+  <div class="relative z-10 w-[260px] h-[260px]" aria-hidden="true">
     <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full drop-shadow-2xl">
       <g class="char-purple">
         <path d="M 100 50 L 250 50 L 220 300 L 70 300 Z" fill="#6d28d9" />

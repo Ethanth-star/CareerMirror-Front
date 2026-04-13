@@ -27,7 +27,7 @@ const form = reactive({
 const passwordInput = ref(null)
 
 const textInputClass =
-  'w-full px-3.5 py-2 rounded-xl border border-slate-200 bg-white/70 backdrop-blur-sm text-[13px] text-slate-900 transition-colors focus:bg-white focus:border-indigo-300 focus:ring-0 focus:outline-none focus:shadow-[0_0_0_3px_rgba(109,40,217,0.2)_inset]'
+  'w-full px-3 py-1.5 rounded-xl border border-slate-200 bg-white/70 backdrop-blur-sm text-[11px] text-slate-900 transition-colors focus:bg-white focus:border-indigo-300 focus:ring-0 focus:outline-none focus:shadow-[0_0_0_3px_rgba(109,40,217,0.2)_inset]'
 
 function togglePassword() {
   emit('update:password-visible', !props.passwordVisible)
@@ -45,18 +45,18 @@ function submit() {
 
 <template>
   <div class="fade-enter block">
-    <div class="text-center mb-6">
-      <h2 class="text-[22px] leading-tight font-bold text-slate-900 mb-1.5">Create an account</h2>
-      <p class="text-[13px] text-slate-500">Join CareerCompass to find your next opportunity</p>
+    <div class="text-center mb-5">
+      <h2 class="text-[18px] leading-tight font-bold text-slate-900 mb-1">Create an account</h2>
+      <p class="text-[11px] text-slate-500">Join CareerCompass to find your next opportunity</p>
     </div>
 
-    <form class="space-y-3.5" @submit.prevent="submit">
+    <form class="space-y-3" @submit.prevent="submit">
       <div>
-        <label class="block text-[12px] font-medium text-slate-700 mb-1.5">I am a...</label>
+        <label class="block text-[10px] font-medium text-slate-700 mb-1">I am a...</label>
         <div class="flex gap-4">
           <button
             type="button"
-            class="flex-1 py-2.5 border rounded-xl text-[13px] font-medium transition-colors focus:outline-none"
+            class="flex-1 py-2 border rounded-xl text-[11px] font-medium transition-colors focus:outline-none"
             :class="
               form.role === 'student'
                 ? 'border-indigo-300 bg-indigo-50 text-indigo-900'
@@ -69,7 +69,7 @@ function submit() {
 
           <button
             type="button"
-            class="flex-1 py-2.5 border rounded-xl text-[13px] font-medium transition-colors focus:outline-none"
+            class="flex-1 py-2 border rounded-xl text-[11px] font-medium transition-colors focus:outline-none"
             :class="
               form.role === 'institute'
                 ? 'border-indigo-300 bg-indigo-50 text-indigo-900'
@@ -83,7 +83,7 @@ function submit() {
       </div>
 
       <div>
-        <label class="block text-[12px] font-medium text-slate-700 mb-1">Full Name or Institute Name</label>
+        <label class="block text-[10px] font-medium text-slate-700 mb-1">Full Name or Institute Name</label>
         <input
           v-model="form.displayName"
           type="text"
@@ -95,7 +95,7 @@ function submit() {
       </div>
 
       <div>
-        <label class="block text-[12px] font-medium text-slate-700 mb-1">Account</label>
+        <label class="block text-[10px] font-medium text-slate-700 mb-1">Account</label>
         <input
           v-model="form.account"
           type="text"
@@ -107,7 +107,7 @@ function submit() {
       </div>
 
       <div>
-        <label class="block text-[12px] font-medium text-slate-700 mb-1">Password</label>
+        <label class="block text-[10px] font-medium text-slate-700 mb-1">Password</label>
         <div class="relative">
           <input
             ref="passwordInput"
@@ -121,7 +121,7 @@ function submit() {
 
           <button
             type="button"
-            class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 toggle-pwd outline-none"
+            class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 toggle-pwd outline-none"
             :aria-label="passwordVisible ? 'Hide password' : 'Show password'"
             @mousedown.prevent
             @click="togglePassword"
@@ -133,7 +133,7 @@ function submit() {
               viewBox="0 0 24 24"
               stroke-width="2"
               stroke="currentColor"
-              class="w-5 h-5"
+              class="w-4 h-4"
             >
               <path
                 stroke-linecap="round"
@@ -150,7 +150,7 @@ function submit() {
               viewBox="0 0 24 24"
               stroke-width="2"
               stroke="currentColor"
-              class="w-5 h-5"
+              class="w-4 h-4"
             >
               <path
                 stroke-linecap="round"
@@ -162,12 +162,12 @@ function submit() {
         </div>
       </div>
 
-      <div class="flex items-start text-[12px]">
+      <div class="flex items-start text-[10px]">
         <div class="flex items-center h-5">
           <input
             v-model="form.agree"
             type="checkbox"
-            class="w-3.5 h-3.5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-600 cursor-pointer"
+            class="w-3 h-3 rounded border-slate-300 text-indigo-600 focus:ring-indigo-600 cursor-pointer"
           />
         </div>
 
@@ -180,13 +180,13 @@ function submit() {
       </div>
 
       <button
-        class="w-full py-2.5 px-4 bg-white border border-slate-200 text-slate-900 rounded-xl text-[14px] font-semibold hover:bg-slate-50 transition-colors shadow-sm mt-1.5"
+        class="w-full py-2 px-3 bg-white border border-slate-200 text-slate-900 rounded-xl text-[12px] font-semibold hover:bg-slate-50 transition-colors shadow-sm mt-1"
       >
         Create Account
       </button>
     </form>
 
-    <p class="text-center text-[13px] text-slate-500 mt-4">
+    <p class="text-center text-[11px] text-slate-500 mt-3">
       Already have an account?
       <button
         type="button"
