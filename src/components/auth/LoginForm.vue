@@ -2,6 +2,14 @@
 import { nextTick, reactive, ref } from 'vue'
 
 const props = defineProps({
+  errorMessage: {
+    type: String,
+    default: '',
+  },
+  loading: {
+    type: Boolean,
+    default: false,
+  },
   passwordVisible: {
     type: Boolean,
     required: true,
@@ -17,7 +25,8 @@ const emit = defineEmits([
 ])
 
 const form = reactive({
-  account: '',
+  role_type: 'student',
+  username: '',
   password: '',
   remember: false,
 })
@@ -50,9 +59,40 @@ function submit() {
 
     <form class="space-y-3" @submit.prevent="submit">
       <div>
+        <label class="block text-[10px] font-medium text-slate-700 mb-1">I am a...</label>
+        <div class="flex gap-2">
+          <button
+            type="button"
+            class="flex-1 py-2 border rounded-xl text-[11px] font-medium transition-colors focus:outline-none"
+            :class="
+              form.role_type === 'student'
+                ? 'border-indigo-300 bg-indigo-50 text-indigo-900'
+                : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'
+            "
+            @click="form.role_type = 'student'"
+          >
+            Student
+          </button>
+
+          <button
+            type="button"
+            class="flex-1 py-2 border rounded-xl text-[11px] font-medium transition-colors focus:outline-none"
+            :class="
+              form.role_type === 'admin'
+                ? 'border-indigo-300 bg-indigo-50 text-indigo-900'
+                : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'
+            "
+            @click="form.role_type = 'admin'"
+          >
+            Institute
+          </button>
+        </div>
+      </div>
+
+      <div>
         <label class="block text-[10px] font-medium text-slate-700 mb-1">Account</label>
         <input
-          v-model="form.account"
+          v-model="form.username"
           type="text"
           :class="textInputClass"
           placeholder="Enter your account"
@@ -132,10 +172,15 @@ function submit() {
         </a>
       </div>
 
+      <p v-if="errorMessage" class="text-[10px] text-red-500">
+        {{ errorMessage }}
+      </p>
+
       <button
+        :disabled="loading"
         class="w-full py-2 px-3 bg-white border border-slate-200 text-slate-900 rounded-xl text-[12px] font-semibold hover:bg-slate-50 transition-colors shadow-sm"
       >
-        Log in
+        {{ loading ? 'Logging in...' : 'Log in' }}
       </button>
     </form>
 

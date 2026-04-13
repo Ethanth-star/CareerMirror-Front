@@ -1,5 +1,7 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { normalizeHomePathByRole, useUserStore } from '../../stores/user'
 import LoginForm from './LoginForm.vue'
 import SignupForm from './SignupForm.vue'
 import SvgCharacters from './SvgCharacters.vue'
@@ -16,6 +18,12 @@ const mouse = reactive({
   x: 0.5,
   y: 0.5,
 })
+
+const router = useRouter()
+const userStore = useUserStore()
+
+const loginLoading = ref(false)
+const loginErrorMessage = ref('')
 
 const focusState = computed(() => {
   const currentPanelPasswordShown =
@@ -53,10 +61,12 @@ const pupilTransform = computed(() => {
 function switchPanel(panel) {
   activePanel.value = panel
   activeInputKey.value = null
+  loginErrorMessage.value = ''
 }
 
 function handleFocusInput(key) {
   activeInputKey.value = key
+  loginErrorMessage.value = ''
 }
 
 function handleBlurInput(key) {
@@ -74,8 +84,19 @@ function handleMouseMove(event) {
   mouse.y = window.innerHeight ? event.clientY / window.innerHeight : 0.5
 }
 
-function handleLoginSubmit(payload) {
-  console.log('login form submitted', payload)
+async function handleLoginSubmit(payload) {
+  loginLoading.value = true
+  loginErrorMessage.value = ''
+
+  try {
+    const loginData = await userStore.loginAction(payload)
+    await router.push(normalizeHomePathByRole(loginData.role))
+  } catch (error) {
+    loginErrorMessage.value =
+      error instanceof Error ? error.message : '账号或密码错误，请检查后重试'
+  } finally {
+    loginLoading.value = false
+  }
 }
 
 function handleSignupSubmit(payload) {
@@ -132,6 +153,8 @@ onBeforeUnmount(() => {
           <LoginForm
             v-if="activePanel === 'login'"
             class="fade-enter"
+            :error-message="loginErrorMessage"
+            :loading="loginLoading"
             :password-visible="passwordVisible.login"
             @focus-input="handleFocusInput"
             @blur-input="handleBlurInput"
