@@ -42,8 +42,13 @@ request.interceptors.response.use(
       }
     }
 
+    const networkHint =
+      error.code === 'ERR_NETWORK'
+        ? '无法连接到后端服务，请确认 http://localhost:8000 已启动。'
+        : null
+
     return Promise.reject(
-      new Error(error.response?.data?.msg || error.message || '网络异常，请稍后重试'),
+      new Error(error.response?.data?.msg || networkHint || error.message || '网络异常，请稍后重试'),
     )
   },
 )

@@ -1,7 +1,9 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { uploadResumeAPI } from '../../api/input'
+import CareerReportPanel from './CareerReportPanel.vue'
 
+const currentView = ref('input')
 const activeTab = ref('pdf')
 const needExtraTest = ref(true)
 const isRecording = ref(false)
@@ -66,6 +68,10 @@ function toggleRecording() {
   isRecording.value = !isRecording.value
 }
 
+function backToInput() {
+  currentView.value = 'input'
+}
+
 async function submitResume() {
   uploadError.value = ''
   uploadSuccess.value = ''
@@ -91,6 +97,7 @@ async function submitResume() {
     })
 
     uploadResult.value = response.data
+    currentView.value = 'report'
     uploadSuccess.value = response.msg || '简历解析成功'
   } catch (error) {
     uploadError.value = error instanceof Error ? error.message : '简历解析失败，请稍后重试'
@@ -101,7 +108,13 @@ async function submitResume() {
 </script>
 
 <template>
-  <div class="w-full max-w-[28rem] glass-card rounded-[1.25rem] p-4 relative overflow-hidden">
+  <CareerReportPanel
+    v-if="currentView === 'report' && uploadResult"
+    :upload-result="uploadResult"
+    @back="backToInput"
+  />
+
+  <div v-else class="w-full max-w-[28rem] glass-card rounded-[1.25rem] p-4 relative overflow-hidden">
     <div
       class="absolute -top-20 -right-20 w-40 h-40 bg-indigo-300/20 rounded-full blur-[40px] pointer-events-none"
     ></div>
